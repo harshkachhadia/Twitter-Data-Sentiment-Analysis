@@ -14,6 +14,9 @@ ACCESS_TOKEN_SECRET = ""
 CONSUMER_KEY = ""
 CONSUMER_SECRET = ""
 
+ID = "" #Twitter ID of the account for which sentiment analysis has to be done
+NoOfTweets = 20 #Mention number of tweets(strting from most recent) of account mentioned above to be utilized for sentiment analysis
+
 class TwitterClient():
 
     def __init__(self, twitter_user=None):
@@ -61,7 +64,7 @@ if __name__== "__main__":
     tweet_analyzer = TweetAnalyzer()
     
     api = twitter_client.twitter_client
-    tweets = api.user_timeline(id="realDonaldTrump", count=200)
+    tweets = api.user_timeline(id=ID, count=NoOfTweets)
     
     df = tweet_analyzer.tweets_to_data_frame(tweets)
     df['sentiment'] = np.array([tweet_analyzer.analyze_sentiment(tweet) for tweet in df['tweets']])
